@@ -80,38 +80,108 @@ namespace Annulaire_Serveur.DB
         //4.Ajouter un membre
         public async void AddMembre(string nom, string prenom, string categorie, string matricule, string email, string telephone, bool listeRouge, string domaine)
         {
+            string query = @"INSERT INTO Annulaire (Nom, Prenom, Catégorie, Matricule, Email, Téléphone, [ListeRouge], Domaine) 
+                         VALUES (@Nom, @Prenom, @Catégorie, @Matricule, @Email, @Téléphone, @ListeRouge, @Domaine)";
 
+            using (var command = new OleDbCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Nom", nom);
+                command.Parameters.AddWithValue("@Prenom", prenom);
+                command.Parameters.AddWithValue("@Categorie", categorie);
+                command.Parameters.AddWithValue("@Matricule", matricule);
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Telephone", telephone);
+                command.Parameters.AddWithValue("@ListeRouge", listeRouge);
+                command.Parameters.AddWithValue("@Domaine", domaine);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                connection.Close();
+            }
         }
 
         //5.Supprimer un membre
         public async void DeleteMember(int num)
         {
+            string query = "DELETE FROM Annulaire WHERE Num = @Num";
 
+            using (var command = new OleDbCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Num", num);
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                connection.Close();
+            }
         }
 
         //6.Modififer un membre
         public async void ModifyMember(int num, string nom, string prenom, string categorie, string matricule, string email, string telephone, bool listeRouge, string domaine)
-        { 
+        {
+            string query = @"UPDATE Annulaire SET Nom = @Nom, Prenom = @Prenom, Catégorie = @Catégorie, 
+                         Matricule = @Matricule, Email = @Email, Téléphone = @Téléphone, [ListeRouge] = @ListeRouge, 
+                         Domaine = @Domaine WHERE Num = @Num";
 
+            using (var command = new OleDbCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Nom", nom);
+                command.Parameters.AddWithValue("@Prenom", prenom);
+                command.Parameters.AddWithValue("@Catégorie", categorie);
+                command.Parameters.AddWithValue("@Matricule", matricule);
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Téléphone", telephone);
+                command.Parameters.AddWithValue("@ListeRouge", listeRouge);
+                command.Parameters.AddWithValue("@Domaine", domaine);
+                command.Parameters.AddWithValue("@Num", num);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                connection.Close();
+            }
         }
 
         //7.Mettre un membre sur la liste rouge
-        public async void AddRougeMember(int num)
+        public async void SetRougeMember(int num)
         {
+            string query = "UPDATE Annulaire SET [ListeRouge] = @ListeRouge WHERE Num = @Num";
 
+            using (var command = new OleDbCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ListeRouge", true);
+                command.Parameters.AddWithValue("@Num", num);
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                connection.Close();
+            }
         }
 
         //8.Enlever un membre de la liste rouge
         public async void RemoveRougeMember(int num)
         {
+            string query = "UPDATE Annulaire SET [ListeRouge] = @ListeRouge WHERE Num = @Num";
 
+            using (var command = new OleDbCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ListeRouge", false);
+                command.Parameters.AddWithValue("@Num", num);
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                connection.Close();
+            }
         }
 
         //Verifier la si utilisateur est admin
         public async Task<bool> VerifyAdminCredential(string password)
         {
+            string query = "SELECT [mot de passe] FROM Admin";
+            using (var command = new OleDbCommand(query, connection))
+            {
+                await connection.OpenAsync();
+                var motDePasseBD = await command.ExecuteScalarAsync() as string;
+                connection.Close();
 
-            return false;
+                // Comparer le mot de passe de la base de données avec le mot de passe fourni
+                return motDePasseBD != null && motDePasseBD == password;
+            }
         }
 
         // Implemente IDisposable pour automatiquement jeter la connection quand demande fini

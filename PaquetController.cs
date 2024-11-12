@@ -163,7 +163,7 @@ namespace Annulaire_Serveur
                             if (paquet.donnee[0].Count() == 1)
                             {
                                 int num = int.Parse(paquet.donnee[0][0]);   
-                                AppDbContext.Instance.AddRougeMember(num);
+                                AppDbContext.Instance.SetRougeMember(num);
                                 nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), true);
                             }
                             else { nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), false); }

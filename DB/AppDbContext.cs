@@ -13,10 +13,11 @@ namespace Annulaire_Serveur.DB
     internal class AppDbContext : IDisposable
     {
         private static AppDbContext instance;
-        private static readonly string conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Mathi\\source\\repos\\Annulaire_Serveur\\DB\\Annulaire.accdb;Persist Security Info=True";
         private OleDbConnection connection;
         public AppDbContext() 
         {
+            string dbPath = @"../../../DB/Annulaire.accdb";
+            string conString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};Persist Security Info=True";
             connection = new OleDbConnection(conString);
         }
 

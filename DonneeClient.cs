@@ -39,7 +39,6 @@ namespace Annulaire_Serveur
                 if (bufferSize > 0)
                 {
                     Paquet paquet = new Paquet(buffer);
-                    Console.WriteLine("Data received and put in a paquet");
                     if (paquet != null)
                     {
                         PaquetController.DataController(paquet, this);

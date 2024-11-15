@@ -31,7 +31,7 @@ namespace Annulaire_Serveur.DB
         public async Task<List<Membre>> GetProfDomaine(string domaine)
         {
 
-            string query = @"SELECT Num, Nom, Prenom, Catégorie, Matricule, Email, Téléphone, [ListeRouge], Domaine FROM Annulaire WHERE Categorie = 'professeur' AND Domaine = ?";
+            string query = @"SELECT Num, Nom, Prenom, Catégorie, Matricule, Email, Téléphone, [ListeRouge], Domaine FROM Annulaire WHERE Catégorie = 'Professeur' AND Domaine = ?";
 
             return await FiltreListeRouge(query, "@Domaine", domaine);
         }
@@ -51,6 +51,7 @@ namespace Annulaire_Serveur.DB
 
             await using (var command = new OleDbCommand(query, connection))
             {
+                command.Parameters.AddWithValue("?", valeur);
                 command.Parameters.AddWithValue("?", valeur);
                 await connection.OpenAsync();
                 await using (var reader = await command.ExecuteReaderAsync())
@@ -87,10 +88,10 @@ namespace Annulaire_Serveur.DB
             {
                 command.Parameters.AddWithValue("@Nom", nom);
                 command.Parameters.AddWithValue("@Prenom", prenom);
-                command.Parameters.AddWithValue("@Categorie", categorie);
+                command.Parameters.AddWithValue("@Catégorie", categorie);
                 command.Parameters.AddWithValue("@Matricule", matricule);
                 command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Telephone", telephone);
+                command.Parameters.AddWithValue("@Téléphone", telephone);
                 command.Parameters.AddWithValue("@ListeRouge", listeRouge);
                 command.Parameters.AddWithValue("@Domaine", domaine);
 

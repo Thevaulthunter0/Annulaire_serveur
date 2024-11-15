@@ -24,11 +24,11 @@ namespace Annulaire_Serveur
                 if(succes == true)
                 {
                     client.admin = true;
-                    nPaquet = new Paquet(0, client.id, TypePaquet.Connexion, new List<List<String>>(), true);
+                    nPaquet = new Paquet(0, client.id, TypePaquet.Connexion, new List<List<string>>(), true);
                 }
                 else
                 {
-                    nPaquet = new Paquet(0, client.id, TypePaquet.Connexion, new List<List<String>>(), false);
+                    nPaquet = new Paquet(0, client.id, TypePaquet.Connexion, new List<List<string>>(), false);
                 }
                 await client.socketClient.SendAsync(nPaquet.bytes());
             }
@@ -43,12 +43,14 @@ namespace Annulaire_Serveur
                         {
                             string Catégorie = paquet.donnee[0][0];
                             List<Membre> membres = await AppDbContext.Instance.GetMembreCategorie(Catégorie);
-                            List<List<String>> strings = MembreToListString(membres);
+                            List<List<string>> strings = MembreToListString(membres);
                             nPaquet = new Paquet(1, client.id, TypePaquet.Demande, strings, true);
                         }
                         else
                         {
-                            nPaquet = new Paquet(1, client.id, TypePaquet.Demande,new List<List<string>>(), false);
+                            List<List<string>> error = new List<List<string>>();
+                            error.Add(new List<string> { "Veuillez fournir une catégorie valide." });
+                            nPaquet = new Paquet(1, client.id, TypePaquet.Demande, error, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -155,6 +157,7 @@ namespace Annulaire_Serveur
                         {
                             nPaquet = new Paquet(6, client.id, TypePaquet.Demande, new List<List<String>>(), false);
                         }
+                        await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
                     //Mettre membre sur la liste rouge(Num)
                     case 7:

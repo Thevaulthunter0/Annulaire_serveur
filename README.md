@@ -38,8 +38,7 @@ Paquet p = new Paquet(buffer[])
 1. Client construit le paquet et le parametre:
 ```
 List<List<String>> parametre = new List<List<String>>();
-parametre.Add(new List<String>)
-parametre[0] = "Etudiant";
+parametre.Add(new List<String> { "Etudiant" });
 Paquet p = Paquet(1, 0, TypePaquet.Demande, parametre, false)
 ```
 2. Transforme le paquet en bytes
@@ -73,8 +72,7 @@ Doit donner le mot de passe pour essayer de se connecter.
 
 ```
 List<List<String>> password = new List<List<String>>();
-password.Add(new List<String>)
-password[0] = "1234";
+password.Add(new List<String> { "1234 "});
 Paquet(0,0,TypePaquet.Connexion, password, false)
 ```
 ### (1) Lister les membres d’une catégorie donnée ###
@@ -85,8 +83,7 @@ Catégorie peut etre :
  
 ```
 List<List<String>> Catégorie = new List<List<String>>();
-Catégorie.Add(new List<String>)
-Catégorie[0] = "Etudiant"
+Catégorie.Add(new List<String> { "Etudiant" });
 Paquet(1,0,TypePaquet.Demande, Catégorie, false)
 ```
 ### (2) Lister les professeurs dans un domaine d’activité donné ###
@@ -96,8 +93,7 @@ Domaine peut etre :
 
 ```
 List<List<String>> Domaine = new List<List<String>>();
-Domaine.Add(new List<String>)
-Domaine[0] = "???"
+Domaine.Add(new List<String> { "???" });
 Paquet(2,0,TypePaquet.Demande, Domaine, false)
 ```
 ### (3) Rechercher un membre ###
@@ -105,8 +101,7 @@ Paquet(2,0,TypePaquet.Demande, Domaine, false)
 Recherche à partir d'un nom OU prenom
 ```
 List<List<String>> Nom = new List<List<String>>();
-Nom.Add(new List<String>)
-Nom[0] = "Trystan"
+Nom.Add(new List<String> {"Trystan"});
 Paquet p = Paquet(3,0,TypePaquet.Demande, Nom, false)
 ```
 ### (4) Ajouter un membre ###
@@ -114,15 +109,9 @@ Paquet p = Paquet(3,0,TypePaquet.Demande, Nom, false)
 Doit envoyer les parametres d'un membre
 ```
 List<List<String>> Parametre = new List<List<String>>();
-Parametre.Add(new List<String>)
-Parametre[0] = "@Nom"
-Parametre[1] = "@Prenom"
-Parametre[2] = "@Catégorie"
-Parametre[3] = "@Matricule"
-Parametre[4] = "@Email"
-Parametre[5] = "@Telephone"
-Parametre[6] = "@ListRouge"
-Parametre[7] = "@Domaine"
+Parametre.Add(new List<String> {
+"@Nom", "@Prenom", "@Catégorie", "@Matricule", "@Email",
+"@Telephone", "@ListRouge", "@Domaine"});
 Paquet p = Paquet(4,0,TypePaquet.Demande, Parametre, false)
 ```
 ### (5) Supprimer un membre ###
@@ -130,8 +119,7 @@ Paquet p = Paquet(4,0,TypePaquet.Demande, Parametre, false)
 Doit envoyer le num du membre
 ```
 List<List<String>> Num = new List<List<String>>();
-Num.Add(new List<String>)
-Num[0] = "52"
+Num.Add(new List<String> {"52"});
 Paquet p = Paquet(5,0,TypePaquet.Demande, Num, false)
 ```
 ### (6) Modifier (mettre à jour) un membre ###
@@ -143,8 +131,7 @@ PAS ENCORE SUR DE COMMENT LE FAIRE
 Doit envoyer le num du membre
 ```
 List<List<String>> Num = new List<List<String>>();
-Num.Add(new List<String>)
-Num[0] = "52"
+Num.Add(new List<String> {"52"});
 Paquet p = Paquet(7,0,TypePaquet.Demande, Num, false)
 ```
 
@@ -153,8 +140,7 @@ Paquet p = Paquet(7,0,TypePaquet.Demande, Num, false)
 Doit envoyer le num du membre
 ```
 List<List<String>> Num = new List<List<String>>();
-Num.Add(new List<String>)
-Num[0] = "52"
+Num.Add(new List<String> {"52"});
 Paquet p = Paquet(8,0,TypePaquet.Demande, Num, false)
 ```
 ## Reponse du serveur ##

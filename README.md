@@ -87,9 +87,12 @@ Catégorie.Add(new List<String> { "Etudiant" });
 Paquet(1,0,TypePaquet.Demande, Catégorie, false)
 ```
 ### (2) Lister les professeurs dans un domaine d’activité donné ###
-  
+
 Domaine peut etre :
-	-A DETERMINER
+	- "Logiciel"
+	- "Web et mobile"
+	- "Science des données"
+	- "Cybersécurité"
 
 ```
 List<List<String>> Domaine = new List<List<String>>();
@@ -124,7 +127,14 @@ Paquet p = Paquet(5,0,TypePaquet.Demande, Num, false)
 ```
 ### (6) Modifier (mettre à jour) un membre ###
 
-PAS ENCORE SUR DE COMMENT LE FAIRE
+Doit envoyer les parametres d'un membre + sont numero.
+```
+List<List<String>> Parametre = new List<List<String>>();
+Parametre.Add(new List<String> {
+"@Num, @Nom", "@Prenom", "@Catégorie", "@Matricule", "@Email",
+"@Telephone", "@ListRouge", "@Domaine"});
+Paquet p = Paquet(4,0,TypePaquet.Demande, Parametre, false)
+```
 
 ### (7) Mettre un membre sur la liste rouge ###
 

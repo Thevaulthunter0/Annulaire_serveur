@@ -90,9 +90,23 @@ namespace Annulaire_Serveur.DB
                 command.Parameters.AddWithValue("@Nom", nom);
                 command.Parameters.AddWithValue("@Prenom", prenom);
                 command.Parameters.AddWithValue("@Catégorie", categorie);
-                command.Parameters.AddWithValue("@Matricule", matricule);
+                if(categorie == "Etudiant")
+                {
+                    command.Parameters.AddWithValue("@Matricule", matricule);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@Matricule", "Null");
+                }
                 command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Téléphone", telephone);
+                if(categorie == "Professeur")
+                {
+                    command.Parameters.AddWithValue("@Téléphone", telephone);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@Téléphone", "Null");
+                }
                 command.Parameters.AddWithValue("@ListeRouge", listeRouge);
                 command.Parameters.AddWithValue("@Domaine", domaine);
 
@@ -128,9 +142,23 @@ namespace Annulaire_Serveur.DB
                 command.Parameters.AddWithValue("@Nom", nom);
                 command.Parameters.AddWithValue("@Prenom", prenom);
                 command.Parameters.AddWithValue("@Catégorie", categorie);
-                command.Parameters.AddWithValue("@Matricule", matricule);
+                if(categorie == "Etudiant")
+                {
+                    command.Parameters.AddWithValue("@Matricule", matricule);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@Matricule", "Null");
+                }
                 command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Téléphone", telephone);
+                if(categorie == "Professeur")
+                {
+                    command.Parameters.AddWithValue("@Téléphone", telephone);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@Téléphone", "Null");
+                }
                 command.Parameters.AddWithValue("@ListeRouge", listeRouge);
                 command.Parameters.AddWithValue("@Domaine", domaine);
                 command.Parameters.AddWithValue("@Num", num);

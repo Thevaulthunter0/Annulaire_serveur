@@ -219,7 +219,7 @@ namespace Annulaire_Serveur
                     var value = proprie.GetValue(membre);
                     if (value == null)
                     {
-                        membreProriete.Add("null");
+                        membreProriete.Add("Fait partie de la Liste Rouge");
                         break;
                     }
                     membreProriete.Add(value.ToString());

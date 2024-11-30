@@ -28,7 +28,9 @@ namespace Annulaire_Serveur
                 }
                 else
                 {
-                    nPaquet = new Paquet(0, client.id, TypePaquet.Connexion, new List<List<string>>(), false);
+                    List<List<String>> Erreur = new List<List<String>>();
+                    Erreur.Add(new List<String> { "Mauvais mot de passe." });
+                    nPaquet = new Paquet(0, client.id, TypePaquet.Connexion, Erreur, false);
                 }
                 await client.socketClient.SendAsync(nPaquet.bytes());
             }
@@ -48,9 +50,9 @@ namespace Annulaire_Serveur
                         }
                         else
                         {
-                            List<List<string>> error = new List<List<string>>();
-                            error.Add(new List<string> { "Veuillez fournir une catégorie valide." });
-                            nPaquet = new Paquet(1, client.id, TypePaquet.Demande, error, false);
+                            List<List<string>> Erreur = new List<List<string>>();
+                            Erreur.Add(new List<string> { "Veuillez fournir une catégorie." });
+                            nPaquet = new Paquet(1, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -65,7 +67,9 @@ namespace Annulaire_Serveur
                         }
                         else
                         {
-                            nPaquet = new Paquet(2, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "Veuillez fournir un domaine." });
+                            nPaquet = new Paquet(2, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -80,7 +84,9 @@ namespace Annulaire_Serveur
                         }
                         else
                         {
-                            nPaquet = new Paquet(3, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "Veuillez fournir un nom/prenom." });
+                            nPaquet = new Paquet(3, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -104,11 +110,18 @@ namespace Annulaire_Serveur
                                 AppDbContext.Instance.AddMembre(nom, prenom, categorie, matricule, email, telephone, listeRouge, domaine);
                                 nPaquet = new Paquet(4, client.id, TypePaquet.Demande, new List<List<String>>(), true);
                             }
-                            else { nPaquet = new Paquet(4, client.id, TypePaquet.Demande, new List<List<String>>(), false); }
+                            else 
+                            {
+                                List<List<String>> Erreur = new List<List<String>>();
+                                Erreur.Add(new List<String> { "Information manquante." });
+                                nPaquet = new Paquet(4, client.id, TypePaquet.Demande, Erreur, false); 
+                            }
                         }
                         else
                         {
-                            nPaquet = new Paquet(4, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "N'est pas administrateur" });
+                            nPaquet = new Paquet(4, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -122,11 +135,18 @@ namespace Annulaire_Serveur
                                 AppDbContext.Instance.DeleteMember(num);
                                 nPaquet = new Paquet(5, client.id, TypePaquet.Demande, new List<List<String>>(), true);
                             }
-                            else { nPaquet = new Paquet(5, client.id, TypePaquet.Demande, new List<List<String>>(), false); }
+                            else 
+                            { 
+                                List<List<String>> Erreur = new List<List<String>>();
+                                Erreur.Add(new List<String> { "Veuillez fournir un numero." });
+                                nPaquet = new Paquet(5, client.id, TypePaquet.Demande, Erreur, false);
+                            }
                         }
                         else
                         {
-                            nPaquet = new Paquet(5, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "N'est pas administrateur" });
+                            nPaquet = new Paquet(5, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -151,11 +171,18 @@ namespace Annulaire_Serveur
                                 AppDbContext.Instance.ModifyMember(num, nom, prenom, categorie, matricule, email, telephone, listeRouge, domaine);
                                 nPaquet = new Paquet(6, client.id, TypePaquet.Demande, new List<List<String>>(), true);
                             }
-                            else { nPaquet = new Paquet(6, client.id, TypePaquet.Demande, new List<List<String>>(), false); }
+                            else 
+                            {
+                                List<List<String>> Erreur = new List<List<String>>();
+                                Erreur.Add(new List<String> { "Information manquante." });
+                                nPaquet = new Paquet(6, client.id, TypePaquet.Demande, Erreur, false); 
+                            }
                         }
                         else
                         {
-                            nPaquet = new Paquet(6, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "N'est pas administrateur" });
+                            nPaquet = new Paquet(6, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -169,11 +196,18 @@ namespace Annulaire_Serveur
                                 AppDbContext.Instance.SetRougeMember(num);
                                 nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), true);
                             }
-                            else { nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), false); }
+                            else 
+                            {
+                                List<List<String>> Erreur = new List<List<String>>();
+                                Erreur.Add(new List<String> { "Veuillez fournir un numero." });
+                                nPaquet = new Paquet(7, client.id, TypePaquet.Demande, Erreur, false); 
+                            }
                         }
                         else
                         {
-                            nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "N'est pas administrateur" });
+                            nPaquet = new Paquet(7, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
@@ -187,16 +221,25 @@ namespace Annulaire_Serveur
                                 AppDbContext.Instance.RemoveRougeMember(num);
                                 nPaquet = new Paquet(8, client.id, TypePaquet.Demande, new List<List<String>>(), true);
                             }
-                            else { nPaquet = new Paquet(8, client.id, TypePaquet.Demande, new List<List<String>>(), false); }
+                            else 
+                            {
+                                List<List<String>> Erreur = new List<List<String>>();
+                                Erreur.Add(new List<String> { "Veuillez fournir un numero." });
+                                nPaquet = new Paquet(8, client.id, TypePaquet.Demande, Erreur, false); 
+                            }
                         }
                         else
                         {
-                            nPaquet = new Paquet(8, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                            List<List<String>> Erreur = new List<List<String>>();
+                            Erreur.Add(new List<String> { "N'est pas administrateur" });
+                            nPaquet = new Paquet(8, client.id, TypePaquet.Demande, Erreur, false);
                         }
                         await client.socketClient.SendAsync(nPaquet.bytes());
                         break;
                     default:
-                        nPaquet = new Paquet(9, client.id, TypePaquet.Demande, new List<List<String>>(), false);
+                        List<List<String>> ERR = new List<List<String>>();
+                        ERR.Add(new List<String> { "ERREUR" });
+                        nPaquet = new Paquet(9, client.id, TypePaquet.Demande, ERR, false);
                         break;
                 }
             }

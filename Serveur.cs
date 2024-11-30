@@ -95,11 +95,10 @@ namespace Annulaire_Serveur
             {
                 if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)
                 {
-                    Console.WriteLine("Shutting down server...");
                     flag = false;
-                    conSocket.Close(); // Close the socket to stop accepting new connections
+                    conSocket.Close();
                 }
-                Thread.Sleep(100); // Avoid busy-waiting
+                Thread.Sleep(100);
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Annulaire_Serveur
 
         public Paquet()
         {
-            // Default constructor (parameterless)
+ 
         }
 
         //Creer un paquet a partir de byte

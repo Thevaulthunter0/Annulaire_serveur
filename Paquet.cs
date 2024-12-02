@@ -17,11 +17,11 @@ namespace Annulaire_Serveur
         public bool boolInfo { get; set; }
         public int idClient { get; set; }
         public TypePaquet type { get; set; }
-        public List<List<String>> donnee {  get; set; }
+        public List<List<String>> donnee { get; set; }
 
         public Paquet()
         {
- 
+
         }
 
         //Creer un paquet a partir de byte
@@ -43,12 +43,12 @@ namespace Annulaire_Serveur
 
         //Creer un paquet a partir de nouvelle propriete
         //Puis utiliser la fonciton bytes pour la transformer en byte.
-        public Paquet(int intInfo,  int idClient, TypePaquet type, List<List<String>> donnee, bool boolInfo)
+        public Paquet(int intInfo, int idClient, TypePaquet type, List<List<String>> donnee, bool boolInfo)
         {
             this.intInfo = intInfo;
             this.idClient = idClient;
             this.type = type;
-            this.donnee = donnee;   
+            this.donnee = donnee;
             this.boolInfo = boolInfo;
         }
 

@@ -55,9 +55,9 @@ namespace Annulaire_Serveur
         }
 
         //Methode du thread qui ecoute sur conSocket
-        private static void ConThread() 
+        private static void ConThread()
         {
-            while(flag)
+            while (flag)
             {
                 try
                 {
@@ -69,18 +69,18 @@ namespace Annulaire_Serveur
                 catch (SocketException e)
                 {
                     //Empecher l'application de planter quand utilisateur quitte avec 'Q'
-                    if(flag == false && e.SocketErrorCode == SocketError.Interrupted)
+                    if (flag == false && e.SocketErrorCode == SocketError.Interrupted)
                     {
                         break;
                     }
                 }
-                
+
             }
-            
+
             //Attendre que chaque thread client se ferme(join) avant de fermer le conThread
             //Signifie que le serveur attend que les clients deja connecte quitte avant de completement fermer le serveur
             //Pendant ce temps aucune autre connexion peut se faire
-            if(clients != null)
+            if (clients != null)
             {
                 foreach (DonneeClient client in clients)
                 {
@@ -91,7 +91,7 @@ namespace Annulaire_Serveur
 
         private static void FermerThreadPrinc()
         {
-            while(flag)
+            while (flag)
             {
                 if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)
                 {

@@ -14,10 +14,10 @@ namespace Annulaire_Serveur
         public int id { get; private set; }
         public bool admin { get; set; }
         public Socket socketClient { get; private set; }
-        public Thread threadClient {get; private set; }
+        public Thread threadClient { get; private set; }
         public bool flag { get; set; }
 
-        public DonneeClient(Socket nSocketClient) 
+        public DonneeClient(Socket nSocketClient)
         {
             this.id = Compteur;
             Compteur++;
@@ -31,21 +31,36 @@ namespace Annulaire_Serveur
             flag = true;
             byte[] buffer;
             int bufferSize;
-            while (flag)
+            try
             {
-                buffer = new byte[this.socketClient.ReceiveBufferSize];
-                bufferSize = this.socketClient.Receive(buffer);
-                
-                if (bufferSize > 0)
+                while (flag)
                 {
-                    Paquet paquet = new Paquet(buffer);
-                    if (paquet != null)
+                    buffer = new byte[this.socketClient.ReceiveBufferSize];
+                    bufferSize = this.socketClient.Receive(buffer);
+
+                    if (bufferSize > 0)
                     {
-                        PaquetController.DataController(paquet, this);
+                        Paquet paquet = new Paquet(buffer);
+                        if (paquet != null)
+                        {
+                            PaquetController.DataController(paquet, this);
+                        }
                     }
                 }
             }
-            Console.WriteLine("Thread client fermé.");
+            catch (SocketException ex)
+            {
+                Console.WriteLine($"SocketException: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            finally
+            {
+                this.socketClient.Close();
+                Console.WriteLine("Thread client fermé.");
+            }
         }
     }
 }

@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OleDb;
-using Annulaire_Serveur.DB;
+﻿using Annulaire_Serveur.DB;
 using System.Configuration;
-using Microsoft.VisualBasic;
 
 namespace Annulaire_Serveur
 {
@@ -132,8 +125,18 @@ namespace Annulaire_Serveur
                             if (paquet.donnee[0].Count() == 1)
                             {
                                 int num = int.Parse(paquet.donnee[0][0]);
-                                AppDbContext.Instance.DeleteMember(num);
-                                nPaquet = new Paquet(5, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                //Verifier si num est valide
+                                if (await AppDbContext.Instance.VerifyIsNumValid(num))
+                                {
+                                    AppDbContext.Instance.DeleteMember(num);
+                                    nPaquet = new Paquet(5, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                }
+                                else 
+                                {
+                                    List<List<String>> Erreur = new List<List<String>>();
+                                    Erreur.Add(new List<String> { "Veuillez fournir un numero valide." });
+                                    nPaquet = new Paquet(5, client.id, TypePaquet.Demande, Erreur, false);
+                                }
                             }
                             else 
                             { 
@@ -155,27 +158,36 @@ namespace Annulaire_Serveur
                         if(client.admin == true)
                         {
                             var data = paquet.donnee[0];
-                            if (paquet.donnee[0].Count() == 9)
+                            if(await AppDbContext.Instance.VerifyIsNumValid(int.Parse(data[0])))
                             {
-                                int num = int.Parse(data[0]);
-                                string nom = data[1];
-                                string prenom = data[2];
-                                string categorie = data[3];
-                                string matricule = data[4];
-                                string email = data[5];
-                                string telephone = data[6];
-                                bool listeRouge;
-                                if (data[7] == "true" || data[7] == "True") { listeRouge = true; }
-                                else { listeRouge = false; }
-                                string domaine = data[8];
-                                AppDbContext.Instance.ModifyMember(num, nom, prenom, categorie, matricule, email, telephone, listeRouge, domaine);
-                                nPaquet = new Paquet(6, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                if (paquet.donnee[0].Count() == 9)
+                                {
+                                    int num = int.Parse(data[0]);
+                                    string nom = data[1];
+                                    string prenom = data[2];
+                                    string categorie = data[3];
+                                    string matricule = data[4];
+                                    string email = data[5];
+                                    string telephone = data[6];
+                                    bool listeRouge;
+                                    if (data[7] == "true" || data[7] == "True") { listeRouge = true; }
+                                    else { listeRouge = false; }
+                                    string domaine = data[8];
+                                    AppDbContext.Instance.ModifyMember(num, nom, prenom, categorie, matricule, email, telephone, listeRouge, domaine);
+                                    nPaquet = new Paquet(6, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                }
+                                else
+                                {
+                                    List<List<String>> Erreur = new List<List<String>>();
+                                    Erreur.Add(new List<String> { "Information manquante." });
+                                    nPaquet = new Paquet(6, client.id, TypePaquet.Demande, Erreur, false);
+                                }
                             }
-                            else 
+                            else
                             {
                                 List<List<String>> Erreur = new List<List<String>>();
-                                Erreur.Add(new List<String> { "Information manquante." });
-                                nPaquet = new Paquet(6, client.id, TypePaquet.Demande, Erreur, false); 
+                                Erreur.Add(new List<String> { "Veuillez fournir un numero valide." });
+                                nPaquet = new Paquet(6, client.id, TypePaquet.Demande, Erreur, false);
                             }
                         }
                         else
@@ -193,8 +205,17 @@ namespace Annulaire_Serveur
                             if (paquet.donnee[0].Count() == 1)
                             {
                                 int num = int.Parse(paquet.donnee[0][0]);   
-                                AppDbContext.Instance.SetRougeMember(num);
-                                nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                if(await AppDbContext.Instance.VerifyIsNumValid(num))
+                                {
+                                    AppDbContext.Instance.SetRougeMember(num);
+                                    nPaquet = new Paquet(7, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                }
+                                else
+                                {
+                                    List<List<String>> Erreur = new List<List<String>>();
+                                    Erreur.Add(new List<String> { "Veuillez fournir un numero valide." });
+                                    nPaquet = new Paquet(7, client.id, TypePaquet.Demande, Erreur, false);
+                                }
                             }
                             else 
                             {
@@ -218,8 +239,17 @@ namespace Annulaire_Serveur
                             if (paquet.donnee[0].Count() == 1)
                             {
                                 int num = int.Parse(paquet.donnee[0][0]);
-                                AppDbContext.Instance.RemoveRougeMember(num);
-                                nPaquet = new Paquet(8, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                if(await AppDbContext.Instance.VerifyIsNumValid(num))
+                                {
+                                    AppDbContext.Instance.RemoveRougeMember(num);
+                                    nPaquet = new Paquet(8, client.id, TypePaquet.Demande, new List<List<String>>(), true);
+                                }
+                                else
+                                {
+                                    List<List<String>> Erreur = new List<List<String>>();
+                                    Erreur.Add(new List<String> { "Veuillez fournir un numero valide." });
+                                    nPaquet = new Paquet(8, client.id, TypePaquet.Demande, Erreur, false);
+                                }
                             }
                             else 
                             {

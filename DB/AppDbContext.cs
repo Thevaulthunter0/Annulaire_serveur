@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OleDb;
-using System.Formats.Asn1;
-using static System.Net.Mime.MediaTypeNames;
-using System.Runtime.CompilerServices;
+﻿using System.Data.OleDb;
+using System.Diagnostics.PerformanceData;
 
 namespace Annulaire_Serveur.DB
 {
@@ -211,6 +204,21 @@ namespace Annulaire_Serveur.DB
 
                 // Comparer le mot de passe de la base de données avec le mot de passe fourni
                 return motDePasseBD != null && motDePasseBD == password;
+            }
+        }
+
+        //Vérifier que le num envoyer par le client existe dans la base de donnée
+        public async Task<bool> VerifyIsNumValid(int num)
+        {
+            string query = "SELECT COUNT(1) FROM Annulaire WHERE Num = ?";
+            using (var command = new OleDbCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("?", num);
+                await connection.OpenAsync();
+                int count = (int)command.ExecuteScalar();
+                connection.Close();
+                if (count > 0) { return true; }
+                else { return false; }
             }
         }
 

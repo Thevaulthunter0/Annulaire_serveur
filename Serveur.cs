@@ -1,11 +1,5 @@
-﻿using Annulaire_Serveur;
-using System.Threading;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.ComponentModel.Design;
-using static Annulaire_Serveur.Paquet;
-using Annulaire_Serveur.DB;
 
 namespace Annulaire_Serveur
 {
@@ -32,6 +26,7 @@ namespace Annulaire_Serveur
             //{
             //    ip = IPAddress.Parse("127.0.0.0");
             //}
+
             IPAddress ip = IPAddress.Parse("127.0.0.1");
 
             //Assigner nos informations IPV4 a conSocket

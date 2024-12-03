@@ -34,8 +34,15 @@ namespace Annulaire_Serveur
             while (flag)
             {
                 buffer = new byte[this.socketClient.ReceiveBufferSize];
-                bufferSize = this.socketClient.Receive(buffer);
-                
+                try
+                {
+                    bufferSize = this.socketClient.Receive(buffer);
+                } catch (System.Net.Sockets.SocketException e)
+                {
+                    socketClient.Close();
+                    break;
+                }
+       
                 if (bufferSize > 0)
                 {
                     Paquet paquet = new Paquet(buffer);

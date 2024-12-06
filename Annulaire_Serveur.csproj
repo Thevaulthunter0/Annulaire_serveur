@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DB\Annulaire.accdb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DB\Annulaire.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Data.OleDb" Version="8.0.1" />
   </ItemGroup>
 

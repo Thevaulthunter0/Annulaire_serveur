@@ -1,15 +1,17 @@
 ﻿using System.Data.OleDb;
 using System.Diagnostics.PerformanceData;
 
-namespace Annulaire_Serveur.DB
+namespace Annulaire_Serveur
 {
     internal class AppDbContext : IDisposable
     {
         private static AppDbContext instance;
         private OleDbConnection connection;
-        public AppDbContext() 
+        public AppDbContext()
         {
-            string dbPath = @"../../../DB/Annulaire.accdb";
+            string relativePath = @"DB/Annulaire.accdb";
+            string basePath = AppDomain.CurrentDomain.BaseDirectory; // Chemin du répertoire de l'exécutable
+            string dbPath = Path.Combine(basePath, relativePath);
             string conString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};Persist Security Info=True";
             connection = new OleDbConnection(conString);
         }
@@ -83,7 +85,7 @@ namespace Annulaire_Serveur.DB
                 command.Parameters.AddWithValue("@Nom", nom);
                 command.Parameters.AddWithValue("@Prenom", prenom);
                 command.Parameters.AddWithValue("@Catégorie", categorie);
-                if(categorie == "Etudiant")
+                if (categorie == "Etudiant")
                 {
                     command.Parameters.AddWithValue("@Matricule", matricule);
                 }
@@ -92,7 +94,7 @@ namespace Annulaire_Serveur.DB
                     command.Parameters.AddWithValue("@Matricule", "Null");
                 }
                 command.Parameters.AddWithValue("@Email", email);
-                if(categorie == "Professeur")
+                if (categorie == "Professeur")
                 {
                     command.Parameters.AddWithValue("@Téléphone", telephone);
                 }
@@ -135,7 +137,7 @@ namespace Annulaire_Serveur.DB
                 command.Parameters.AddWithValue("@Nom", nom);
                 command.Parameters.AddWithValue("@Prenom", prenom);
                 command.Parameters.AddWithValue("@Catégorie", categorie);
-                if(categorie == "Etudiant")
+                if (categorie == "Etudiant")
                 {
                     command.Parameters.AddWithValue("@Matricule", matricule);
                 }
@@ -144,7 +146,7 @@ namespace Annulaire_Serveur.DB
                     command.Parameters.AddWithValue("@Matricule", "Null");
                 }
                 command.Parameters.AddWithValue("@Email", email);
-                if(categorie == "Professeur")
+                if (categorie == "Professeur")
                 {
                     command.Parameters.AddWithValue("@Téléphone", telephone);
                 }

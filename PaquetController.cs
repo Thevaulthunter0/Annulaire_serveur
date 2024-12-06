@@ -1,5 +1,4 @@
-﻿using Annulaire_Serveur.DB;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Annulaire_Serveur
 {
